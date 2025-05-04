@@ -122,13 +122,3 @@ sudo ip link add link <nova-interface> name macvlan0 type macvlan mode bridge
 sudo ip addr add <novo-ip-host>/24 dev macvlan0
 sudo ip link set macvlan0 up
 ```
-
-3. Ajustar IPs nas VMs para uma faixa compatível com a nova rede.
-
-4. (Opcional) Atualizar MACVTAP no Virt-Manager para vincular ao novo nome de interface.
-
----
-
-# Fim
-
-Agora suas VMs estão prontas para se comunicar entre si, sem necessidade de conexão com a internet.
