@@ -1,13 +1,11 @@
-# 2 - Configuração de VMs com Comunicação e Acesso à Internet
+# 2 - Configuração de VMs com Comunicação
 
 Este documento descreve o processo completo para configurar três máquinas virtuais (VMs) no Virt-Manager/QEMU, garantindo que:
 
 - Todas as VMs consigam **se pingar**.
     
-- Todas as VMs tenham **acesso à Internet**.x
-    
 
-## 1. Instalação dos pacotes necessários no Host (Linux Mint)
+## 1. Instalação dos pacotes necessários
 
 ```bash
 sudo apt update
@@ -23,13 +21,6 @@ sudo ip link add link wlp0s20f3 name macvlan0 type macvlan mode bridge
 sudo ip addr add 192.168.1.100/24 dev macvlan0
 sudo ip link set macvlan0 up
 ```
-
-Notas:
-
-- `wlp0s20f3` é a interface Wi-Fi real (confirme usando `ip a`).
-    
-- `192.168.1.100` é o IP fixo para comunicação com as VMs.
-    
 
 ## 3. Criação das VMs
 
@@ -140,8 +131,6 @@ sudo ip addr add 192.168.1.203/24 dev enp1s0
 sudo ip link set enp1s0 up
 ```
 
-A interface `enp2s0` (NAT) pegará automaticamente IP via DHCP para acesso à internet.
-
 ## 7. Testes de Conectividade
 
 Dentro das VMs, testar:
@@ -161,23 +150,3 @@ ping 192.168.1.203
 ```bash
 ping 192.168.1.100
 ```
-
-- Ping para a Internet (Google):
-    
-
-```bash
-ping 8.8.8.8
-ping google.com
-```
-
-## 8. Resumo Final
-
-|VM|IP Fixo (enp1s0)|Internet (enp2s0)|
-|:--|:--|:--|
-|VM1|192.168.1.201|DHCP NAT|
-|VM2|192.168.1.202|DHCP NAT|
-|VM3|192.168.1.203|DHCP NAT|
-
----
-
-Pronto! Agora todas as VMs se comunicam diretamente e possuem acesso à Internet.
