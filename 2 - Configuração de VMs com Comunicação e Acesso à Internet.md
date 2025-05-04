@@ -1,47 +1,6 @@
-# 2 - Configuração de VMs com Comunicação
+# 2 - Configuração de VMs com Comunicação e Acesso à Internet.md
 
-Este documento descreve o processo completo para configurar três máquinas virtuais (VMs) no Virt-Manager/QEMU, garantindo que:
-
-- Todas as VMs consigam **se pingar**.
-    
-
-## 1. Instalação dos pacotes necessários
-
-```bash
-sudo apt update
-sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virt-manager
-```
-
-## 2. Criação da Interface Virtual macvlan
-
-No Host, execute:
-
-```bash
-sudo ip link add link wlp0s20f3 name macvlan0 type macvlan mode bridge
-sudo ip addr add 192.168.1.100/24 dev macvlan0
-sudo ip link set macvlan0 up
-```
-
-## 3. Criação das VMs
-
-Criar três VMs pelo `virt-manager`:
-
-- Usar a ISO do Ubuntu 24.04.
-    
-- 4096 MiB RAM, 2 CPUs, 25 GiB de disco.
-    
-- Nome das VMs:
-    
-    - `ubuntu24.04` (VM1)
-        
-    - `ubuntu24.04-2` (VM2)
-        
-    - `ubuntu24.04-3` (VM3)
-        
-
-**Importante:** Configurar duas interfaces de rede para cada VM:
-
-## 4. Configuração de Rede nas VMs (via `virsh edit`)
+## 1. Configuração de Rede nas VMs (via `virsh edit`)
 
 Editar cada VM com:
 
@@ -98,7 +57,7 @@ virsh edit <nome-da-vm>
 
 Salve e feche o editor (`:wq`).
 
-## 5. Startar as VMs
+## 2. Startar as VMs
 
 ```bash
 virsh start ubuntu24.04
@@ -106,7 +65,7 @@ virsh start ubuntu24.04-2
 virsh start ubuntu24.04-3
 ```
 
-## 6. Configuração de IPs fixos nas VMs
+## 3. Configuração de IPs fixos nas VMs
 
 Dentro de cada VM:
 
@@ -131,7 +90,7 @@ sudo ip addr add 192.168.1.203/24 dev enp1s0
 sudo ip link set enp1s0 up
 ```
 
-## 7. Testes de Conectividade
+## 4. Testes de Conectividade
 
 Dentro das VMs, testar:
 
